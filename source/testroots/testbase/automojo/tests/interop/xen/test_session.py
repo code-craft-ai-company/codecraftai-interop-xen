@@ -1,0 +1,105 @@
+"""
+    .. module:: test_session
+    :platform: Darwin, Linux, Unix, Windows
+    :synopsis: Session login / logout / transparent-re-login tests for the
+        Xen interop client.
+
+    .. moduleauthor:: Myron Walker <myron.walker@gmail.com>
+"""
+
+__author__ = "Myron Walker"
+__copyright__ = "Copyright 2026, Automation Mojo LLC"
+__credits__ = []
+
+
+import pytest
+
+from automojo.errors.exceptions import ConfigurationError
+
+from automojo.interop.xen.exceptions.xenexceptions import (
+    XenAuthenticationError
+)
+from automojo.interop.xen.session.xensessioncredential import (
+    XenSessionCredential
+)
+from automojo.interop.xen.xenclient import XenClient
+
+from ._mockxapi import MockXapiTransport
+
+
+def test_credential_rejects_missing_fields() -> None:
+    """
+        Missing pool-master URL or credentials raises ConfigurationError.
+    """
+    with pytest.raises(ConfigurationError):
+        XenSessionCredential(master_url="", username="root",
+                             password="secret")
+    return
+
+
+def test_login_caches_session(client, transport, fast_aspects) -> None:
+    """
+        First use logs in once and caches the session reference.
+    """
+    client.login(aspects=fast_aspects)
+    assert client.session_manager.session_ref is not None
+    assert transport.login_count == 1
+    return
+
+
+def test_login_failure_raises_authentication_error(credential,
+                                                   fast_aspects) -> None:
+    """
+        A rejected login raises XenAuthenticationError.
+    """
+    transport = MockXapiTransport(reject_login=True)
+    client = XenClient(credential=credential,
+                       transport_factory=lambda *, master_url: transport,
+                       aspects=fast_aspects)
+    with pytest.raises(XenAuthenticationError):
+        client.login(aspects=fast_aspects)
+    return
+
+
+def test_logout_releases_session(client, fast_aspects) -> None:
+    """
+        Logout clears the cached session and is idempotent.
+    """
+    client.login(aspects=fast_aspects)
+    client.logout(aspects=fast_aspects)
+    assert client.session_manager.session_ref is None
+    client.logout(aspects=fast_aspects)
+    return
+
+
+def test_transparent_relogin_on_session_invalid(client, transport,
+                                                fast_aspects) -> None:
+    """
+        A SESSION_INVALID fault triggers a transparent re-login and retry;
+        the call's observable result matches the single-login case.
+    """
+    client.login(aspects=fast_aspects)
+    # Fail the next non-session call once.
+    transport.session_invalid_on_call = transport._non_session_calls + 1
+
+    hosts = client.Hosts.list(aspects=fast_aspects)
+    assert len(hosts) == 1
+    # One initial login plus one re-login.
+    assert transport.login_count == 2
+    return
+
+
+def test_relogin_equivalence_across_first_call(credential,
+                                               fast_aspects) -> None:
+    """
+        Even when the very first dispatched call hits SESSION_INVALID, the
+        result equals the no-failure case.
+    """
+    transport = MockXapiTransport()
+    transport.session_invalid_on_call = 1
+    client = XenClient(credential=credential,
+                       transport_factory=lambda *, master_url: transport,
+                       aspects=fast_aspects)
+    hosts = client.Hosts.list(aspects=fast_aspects)
+    assert len(hosts) == 1
+    return
