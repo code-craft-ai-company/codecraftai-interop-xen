@@ -14,7 +14,7 @@ __credits__ = []
 
 import pytest
 
-from automojo.errors.exceptions import ConfigurationError
+from automojo.errors.exceptions import ConfigurationError, SemanticError
 
 from automojo.interop.xen.exceptions.xenexceptions import (
     XenAuthenticationError
@@ -102,4 +102,35 @@ def test_relogin_equivalence_across_first_call(credential,
                        aspects=fast_aspects)
     hosts = client.Hosts.list(aspects=fast_aspects)
     assert len(hosts) == 1
+    return
+
+
+class _SemanticRaisingTransport(MockXapiTransport):
+    """
+        A transport whose XAPI object dispatch raises SemanticError so the
+        session manager's exception discipline can be verified.
+    """
+
+    def _dispatch_xapi(self, method_path: str, args: tuple):
+        """
+            Raise a SemanticError instead of dispatching the call.
+        """
+        raise SemanticError("injected semantic error")
+
+
+def test_dispatch_lets_semantic_error_bubble(credential,
+                                             fast_aspects) -> None:
+    """
+        A SemanticError raised within a dispatched call must bubble out of
+        ``dispatch`` unchanged — never reclassified as XenError and never
+        consumed by the SESSION_INVALID retry loop.
+    """
+    transport = _SemanticRaisingTransport()
+    client = XenClient(credential=credential,
+                       transport_factory=lambda *, master_url: transport,
+                       aspects=fast_aspects)
+    client.login(aspects=fast_aspects)
+    with pytest.raises(SemanticError):
+        client.session_manager.dispatch(method_path="VM.get_all_records",
+                                        aspects=fast_aspects)
     return

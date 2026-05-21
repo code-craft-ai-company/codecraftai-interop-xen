@@ -17,7 +17,7 @@ import os
 
 from typing import Any, Callable, List, Optional
 
-from automojo.errors.exceptions import ConfigurationError
+from automojo.errors.exceptions import ConfigurationError, SemanticError
 
 from automojo.interop.xen.aspectsxen import AspectsXapi, DEFAULT_XEN_ASPECTS
 from automojo.interop.xen.exceptions.xenexceptions import (
@@ -193,6 +193,8 @@ class XenSessionManager:
         try:
             response = transport.session.login_with_password(
                 self._credential.username, self._credential.password)
+        except SemanticError:
+            raise
         except Exception as xcpt:
             err_msg_lines = ["XAPI session.login_with_password raised."]
             err_msg_lines.append("MASTER_URL: {}".format(
@@ -221,6 +223,8 @@ class XenSessionManager:
         transport = self._ensure_transport()
         try:
             transport.session.logout(self._session_ref)
+        except SemanticError:
+            raise
         except Exception:
             # Logout is best-effort; a stale session simply expires.
             pass
@@ -271,6 +275,8 @@ class XenSessionManager:
                 rtnval = self._unwrap(response=response)
                 return rtnval
             except XenAuthenticationError:
+                raise
+            except SemanticError:
                 raise
             except Exception as xcpt:
                 last_error = xcpt
