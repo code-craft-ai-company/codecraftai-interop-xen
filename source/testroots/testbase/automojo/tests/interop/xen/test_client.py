@@ -8,23 +8,23 @@
 """
 
 __author__ = "Myron Walker"
-__copyright__ = "Copyright 2026, Automation Mojo LLC"
+__copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
-from automojo.interop.xen.apigroups.hostsgroup import HostsGroup
-from automojo.interop.xen.apigroups.networksgroup import NetworksGroup
-from automojo.interop.xen.apigroups.poolgroup import PoolGroup
-from automojo.interop.xen.apigroups.snapshotsgroup import SnapshotsGroup
-from automojo.interop.xen.apigroups.srgroup import SrGroup
-from automojo.interop.xen.apigroups.tasksgroup import TasksGroup
-from automojo.interop.xen.apigroups.templatesgroup import TemplatesGroup
-from automojo.interop.xen.apigroups.vbdsgroup import VbdsGroup
-from automojo.interop.xen.apigroups.vdigroup import VdiGroup
-from automojo.interop.xen.apigroups.vifsgroup import VifsGroup
-from automojo.interop.xen.apigroups.vmsgroup import VmsGroup
-from automojo.interop.xen.refs.refresolver import RefResolver
-from automojo.interop.xen.session.xensessionmanager import XenSessionManager
+from ccai.interop.xen.apigroups.hostsgroup import HostsGroup
+from ccai.interop.xen.apigroups.networksgroup import NetworksGroup
+from ccai.interop.xen.apigroups.poolgroup import PoolGroup
+from ccai.interop.xen.apigroups.snapshotsgroup import SnapshotsGroup
+from ccai.interop.xen.apigroups.srgroup import SrGroup
+from ccai.interop.xen.apigroups.tasksgroup import TasksGroup
+from ccai.interop.xen.apigroups.templatesgroup import TemplatesGroup
+from ccai.interop.xen.apigroups.vbdsgroup import VbdsGroup
+from ccai.interop.xen.apigroups.vdigroup import VdiGroup
+from ccai.interop.xen.apigroups.vifsgroup import VifsGroup
+from ccai.interop.xen.apigroups.vmsgroup import VmsGroup
+from ccai.interop.xen.refs.refresolver import RefResolver
+from ccai.interop.xen.session.xensessionmanager import XenSessionManager
 
 
 def test_client_exposes_session_manager_and_resolver(client) -> None:

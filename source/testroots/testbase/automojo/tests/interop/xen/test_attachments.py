@@ -8,16 +8,16 @@
 """
 
 __author__ = "Myron Walker"
-__copyright__ = "Copyright 2026, Automation Mojo LLC"
+__copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
-from automojo.interop.xen.model.xenvbd import XenVbd
-from automojo.interop.xen.model.xenvif import XenVif
-from automojo.interop.xen.specs.xenvbdspec import XenVbdSpec
-from automojo.interop.xen.specs.xenvdispec import XenVdiSpec
-from automojo.interop.xen.specs.xenvifspec import XenVifSpec
-from automojo.interop.xen.specs.xenvmclonespec import XenVmCloneSpec
+from ccai.interop.xen.model.xenvbd import XenVbd
+from ccai.interop.xen.model.xenvif import XenVif
+from ccai.interop.xen.specs.xenvbdspec import XenVbdSpec
+from ccai.interop.xen.specs.xenvdispec import XenVdiSpec
+from ccai.interop.xen.specs.xenvifspec import XenVifSpec
+from ccai.interop.xen.specs.xenvmclonespec import XenVmCloneSpec
 
 
 def _vm_and_vdi(client, fast_aspects):

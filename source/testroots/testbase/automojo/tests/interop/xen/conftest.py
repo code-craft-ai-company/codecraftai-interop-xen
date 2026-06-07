@@ -7,17 +7,17 @@
 """
 
 __author__ = "Myron Walker"
-__copyright__ = "Copyright 2026, Automation Mojo LLC"
+__copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
 import pytest
 
-from automojo.interop.xen.aspectsxen import AspectsXapi
-from automojo.interop.xen.session.xensessioncredential import (
+from ccai.interop.xen.aspectsxen import AspectsXapi
+from ccai.interop.xen.session.xensessioncredential import (
     XenSessionCredential
 )
-from automojo.interop.xen.xenclient import XenClient
+from ccai.interop.xen.xenclient import XenClient
 
 from ._mockxapi import MockXapiTransport
 

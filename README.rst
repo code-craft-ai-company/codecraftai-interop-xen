@@ -1,8 +1,8 @@
 =========================================
-Automation Mojo Interop - XCP-ng / XenServer
+Code Craft AI Interop - XCP-ng / XenServer
 =========================================
 
-The ``automojo-interop-xen`` package is the venue-specific client for XCP-ng and Citrix
+The ``codecraftai-interop-xen`` package is the venue-specific client for XCP-ng and Citrix
 Hypervisor (XenServer) via the XAPI XML-RPC API exposed on the pool master. Although XAPI
 rides over HTTPS, its serialization is XML-RPC — not REST — and its session model relies
 on opaque per-call object references. For v1 this package uses direct XAPI bindings; the
@@ -22,8 +22,8 @@ Repository Structure
 
 - ``development/`` - Runtime environment scripts.
 - ``repository-setup/`` - Repository homing and setup scripts.
-- ``source/packages/automojo/interop/xen/`` - Package source code.
-- ``source/testroots/testbase/automojo/tests/interop/xen/`` - TestBase test roots.
+- ``source/packages/ccai/interop/xen/`` - Package source code.
+- ``source/testroots/testbase/ccai/tests/interop/xen/`` - TestBase test roots.
 - ``specs/`` - Requirements, design, and task documentation (Kiro-style).
 - ``userguide/`` - Standards, conventions, and documentation.
 

@@ -7,18 +7,18 @@
 """
 
 __author__ = "Myron Walker"
-__copyright__ = "Copyright 2026, Automation Mojo LLC"
+__copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
 import pytest
 
-from automojo.interfaces.itaskhandle import ITaskHandle, TaskState
+from ccai.interfaces.itaskhandle import ITaskHandle, TaskState
 
-from automojo.interop.xen.aspectsxen import AspectsXapi
-from automojo.interop.xen.exceptions.xenexceptions import XenTaskFailedError
-from automojo.interop.xen.model.xentaskhandle import XenTaskHandle
-from automojo.interop.xen.model.xentaskstatus import (
+from ccai.interop.xen.aspectsxen import AspectsXapi
+from ccai.interop.xen.exceptions.xenexceptions import XenTaskFailedError
+from ccai.interop.xen.model.xentaskhandle import XenTaskHandle
+from ccai.interop.xen.model.xentaskstatus import (
     CANCELLED, FAILURE, PENDING, SUCCESS, XenTaskStatus
 )
 

@@ -17,7 +17,7 @@ of the base could be explored, but for v1 the transport is XAPI-native.
 
 ```
 ┌────────────────────────────────────────────────────────┐
-│  automojo-provisioning / venues / xcpng                │
+│  codecraftai-provisioning / venues / xcpng                │
 └──────────┬─────────────────────────────────────────────┘
            │
            ▼
@@ -56,7 +56,7 @@ Exceptions: `XenAuthenticationError`, `XenTaskFailedError`.
 ## Module Layout
 
 ```
-source/packages/automojo/interop/xen/
+source/packages/ccai/interop/xen/
 ├── xenclient.py
 ├── aspectsxen.py
 ├── session/
@@ -75,7 +75,7 @@ source/packages/automojo/interop/xen/
 
 ## See Also
 
-- `automojo-provisioning/specs/venue-xcpng/`
+- `codecraftai-provisioning/specs/venue-xcpng/`
 - Cross-cutting usability commitment §8.1 — XAPI is the second native-shape example after libvirt.
 
 ---

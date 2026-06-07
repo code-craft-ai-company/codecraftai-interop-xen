@@ -8,15 +8,15 @@
 """
 
 __author__ = "Myron Walker"
-__copyright__ = "Copyright 2026, Automation Mojo LLC"
+__copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
 import pytest
 
-from automojo.interop.xen.model.xentaskhandle import XenTaskHandle
-from automojo.interop.xen.model.xenvm import XenVm
-from automojo.interop.xen.specs.xenvmclonespec import XenVmCloneSpec
+from ccai.interop.xen.model.xentaskhandle import XenTaskHandle
+from ccai.interop.xen.model.xenvm import XenVm
+from ccai.interop.xen.specs.xenvmclonespec import XenVmCloneSpec
 
 
 def _clone(client, fast_aspects, *, name_label="worker-01",
