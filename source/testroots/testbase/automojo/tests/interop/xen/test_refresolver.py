@@ -8,7 +8,7 @@
 """
 
 __author__ = "Myron Walker"
-__copyright__ = "Copyright 2026, Automation Mojo LLC"
+__copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
@@ -16,9 +16,9 @@ import pytest
 
 from hypothesis import given, strategies as st
 
-from automojo.errors.exceptions import SemanticError
+from ccai.errors.exceptions import SemanticError
 
-from automojo.interop.xen.refs.refresolver import RefResolver
+from ccai.interop.xen.refs.refresolver import RefResolver
 
 
 def test_remember_then_translate_both_directions() -> None:

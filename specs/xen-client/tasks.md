@@ -2,7 +2,7 @@
 
 ## Package Skeleton
 
-- [x] 1. Create `source/packages/automojo/interop/xen/` package tree with `session/`, `apigroups/`, `refs/`, `model/`, `specs/`, `exceptions/` subpackages.
+- [x] 1. Create `source/packages/ccai/interop/xen/` package tree with `session/`, `apigroups/`, `refs/`, `model/`, `specs/`, `exceptions/` subpackages.
 - [x] 2. Add `aspectsxen.py` defining `AspectsXapi` and `DEFAULT_XEN_ASPECTS`.
 
 ## Session Lifecycle

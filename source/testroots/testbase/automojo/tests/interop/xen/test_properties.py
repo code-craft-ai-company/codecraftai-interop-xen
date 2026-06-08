@@ -8,25 +8,25 @@
 """
 
 __author__ = "Myron Walker"
-__copyright__ = "Copyright 2026, Automation Mojo LLC"
+__copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
 from hypothesis import given, settings, strategies as st
 
-from automojo.interfaces.itaskhandle import TaskState
+from ccai.interfaces.itaskhandle import TaskState
 
-from automojo.interop.xen.aspectsxen import AspectsXapi
-from automojo.interop.xen.model.xentaskhandle import XenTaskHandle
-from automojo.interop.xen.model.xentaskstatus import (
+from ccai.interop.xen.aspectsxen import AspectsXapi
+from ccai.interop.xen.model.xentaskhandle import XenTaskHandle
+from ccai.interop.xen.model.xentaskstatus import (
     PENDING, SUCCESS, XenTaskStatus
 )
-from automojo.interop.xen.refs.refresolver import RefResolver
-from automojo.interop.xen.session.xensessioncredential import (
+from ccai.interop.xen.refs.refresolver import RefResolver
+from ccai.interop.xen.session.xensessioncredential import (
     XenSessionCredential
 )
-from automojo.interop.xen.specs.xenvdispec import XenVdiSpec
-from automojo.interop.xen.xenclient import XenClient
+from ccai.interop.xen.specs.xenvdispec import XenVdiSpec
+from ccai.interop.xen.xenclient import XenClient
 
 from ._mockxapi import MockXapiTransport
 
@@ -123,7 +123,7 @@ def test_property_record_ref_remembers_uuid_pairs(uuid) -> None:
         A record carrying a uuid is recorded by the resolver so the opaque
         ref then translates back to that uuid.
     """
-    from automojo.interop.xen.apigroups.basegroup import BaseGroup
+    from ccai.interop.xen.apigroups.basegroup import BaseGroup
 
     resolver = RefResolver()
     group = BaseGroup(session_manager=None, resolver=resolver)

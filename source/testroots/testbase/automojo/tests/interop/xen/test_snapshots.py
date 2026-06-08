@@ -8,12 +8,12 @@
 """
 
 __author__ = "Myron Walker"
-__copyright__ = "Copyright 2026, Automation Mojo LLC"
+__copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
-from automojo.interop.xen.model.xenvmsnapshot import XenVmSnapshot
-from automojo.interop.xen.specs.xenvmclonespec import XenVmCloneSpec
+from ccai.interop.xen.model.xenvmsnapshot import XenVmSnapshot
+from ccai.interop.xen.specs.xenvmclonespec import XenVmCloneSpec
 
 
 def _vm(client, fast_aspects):

@@ -8,22 +8,22 @@
 """
 
 __author__ = "Myron Walker"
-__copyright__ = "Copyright 2026, Automation Mojo LLC"
+__copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
 import pytest
 
-from automojo.errors.exceptions import SemanticError
+from ccai.errors.exceptions import SemanticError
 
-from automojo.interop.xen.model.xenhost import XenHost
-from automojo.interop.xen.model.xennetwork import XenNetwork
-from automojo.interop.xen.model.xenpool import XenPool
-from automojo.interop.xen.model.xenpif import XenPif
-from automojo.interop.xen.model.xenstoragerepository import (
+from ccai.interop.xen.model.xenhost import XenHost
+from ccai.interop.xen.model.xennetwork import XenNetwork
+from ccai.interop.xen.model.xenpool import XenPool
+from ccai.interop.xen.model.xenpif import XenPif
+from ccai.interop.xen.model.xenstoragerepository import (
     XenStorageRepository
 )
-from automojo.interop.xen.model.xenvmtemplate import XenVmTemplate
+from ccai.interop.xen.model.xenvmtemplate import XenVmTemplate
 
 
 def test_pool_get_returns_typed_record(client, fast_aspects) -> None:

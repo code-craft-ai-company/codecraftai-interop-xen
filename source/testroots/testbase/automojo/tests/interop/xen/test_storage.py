@@ -7,12 +7,12 @@
 """
 
 __author__ = "Myron Walker"
-__copyright__ = "Copyright 2026, Automation Mojo LLC"
+__copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
-from automojo.interop.xen.model.xenvdi import XenVdi
-from automojo.interop.xen.specs.xenvdispec import XenVdiSpec
+from ccai.interop.xen.model.xenvdi import XenVdi
+from ccai.interop.xen.specs.xenvdispec import XenVdiSpec
 
 
 def _seed_sr_ref(client, fast_aspects) -> None:

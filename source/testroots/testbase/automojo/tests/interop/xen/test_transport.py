@@ -8,18 +8,18 @@
 """
 
 __author__ = "Myron Walker"
-__copyright__ = "Copyright 2026, Automation Mojo LLC"
+__copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
 import pytest
 
-from automojo.errors.exceptions import ConfigurationError
+from ccai.errors.exceptions import ConfigurationError
 
-from automojo.interop.xen.exceptions.xenexceptions import (
+from ccai.interop.xen.exceptions.xenexceptions import (
     XenAuthenticationError, XenError
 )
-from automojo.interop.xen.session.xensessionmanager import XenSessionManager
+from ccai.interop.xen.session.xensessionmanager import XenSessionManager
 
 
 def test_unwrap_returns_bare_value() -> None:
