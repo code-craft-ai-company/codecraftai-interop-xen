@@ -15,7 +15,7 @@ from typing import List
 
 from ccai.interop.xen.aspectsxen import AspectsXapi, DEFAULT_XEN_ASPECTS
 from ccai.interop.xen.apigroups.basegroup import BaseGroup
-from ccai.interop.xen.exceptions.xenexceptions import XenError
+from ccai.interop.xen.exceptions.xenexceptions import is_handle_invalid, XenError
 from ccai.interop.xen.model.xenvmsnapshot import XenVmSnapshot
 
 
@@ -74,8 +74,14 @@ class SnapshotsGroup(BaseGroup):
                               aspects=aspects)
         out: List[XenVmSnapshot] = []
         if isinstance(records, dict):
+            # Pre-pass: record every ref first so a snapshot's snapshot_of ->
+            # parent-uuid resolution does not depend on dict iteration order. The
+            # prior single-pass dropped snapshots whose record preceded their
+            # parent VM record.
             for opaque_ref, record in records.items():
                 self._record_ref(opaque_ref=opaque_ref, record=record)
+
+            for opaque_ref, record in records.items():
                 if bool(record.get("is_a_snapshot", False)) is not True:
                     continue
                 of_ref = record.get("snapshot_of", None)
@@ -122,7 +128,8 @@ class SnapshotsGroup(BaseGroup):
         try:
             self._call(method_path="VM.destroy", args=[snap_ref],
                        aspects=aspects)
-        except XenError:
-            pass
+        except XenError as xerr:
+            if not is_handle_invalid(xerr):
+                raise
         self._resolver.forget_uuid(uuid=snapshot_uuid)
         return

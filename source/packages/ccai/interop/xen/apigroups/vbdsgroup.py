@@ -15,7 +15,7 @@ from typing import List, Optional
 
 from ccai.interop.xen.aspectsxen import AspectsXapi, DEFAULT_XEN_ASPECTS
 from ccai.interop.xen.apigroups.basegroup import BaseGroup
-from ccai.interop.xen.exceptions.xenexceptions import XenError
+from ccai.interop.xen.exceptions.xenexceptions import is_handle_invalid, XenError
 from ccai.interop.xen.model.xenvbd import XenVbd
 from ccai.interop.xen.specs.xenvbdspec import XenVbdSpec
 
@@ -121,7 +121,8 @@ class VbdsGroup(BaseGroup):
         try:
             self._call(method_path="VBD.destroy", args=[vbd_ref],
                        aspects=aspects)
-        except XenError:
-            pass
+        except XenError as xerr:
+            if not is_handle_invalid(xerr):
+                raise
         self._resolver.forget_uuid(uuid=vbd_uuid)
         return

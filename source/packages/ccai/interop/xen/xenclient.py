@@ -146,7 +146,12 @@ class XenClient:
                                             aspects=self._aspects)
             return rtnval
 
-        rtnval = XenTaskHandle(task_uuid=task_uuid, status_fetcher=_fetch)
+        def _cancel(uuid: str) -> None:
+            tasks_group.cancel(task_uuid=uuid, aspects=self._aspects)
+            return
+
+        rtnval = XenTaskHandle(task_uuid=task_uuid, status_fetcher=_fetch,
+                               canceller=_cancel)
         return rtnval
 
     @property

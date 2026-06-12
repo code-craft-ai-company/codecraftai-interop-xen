@@ -53,3 +53,17 @@ class TasksGroup(BaseGroup):
             result=result, error_info=error_info,
         )
         return rtnval
+
+    def cancel(self, *, task_uuid: str,
+               aspects: AspectsXapi = DEFAULT_XEN_ASPECTS) -> None:
+        """
+            Request cancellation of an XAPI task.
+
+            :param task_uuid: The task uuid to cancel.
+            :param aspects: Behaviour controls.
+        """
+        task_ref = self._call(method_path="task.get_by_uuid",
+                              args=[task_uuid], aspects=aspects)
+        self._call(method_path="task.cancel", args=[task_ref],
+                   aspects=aspects)
+        return

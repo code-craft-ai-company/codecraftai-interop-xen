@@ -16,7 +16,7 @@ from typing import Any, Callable, List, Optional, Tuple
 
 from ccai.interop.xen.aspectsxen import AspectsXapi, DEFAULT_XEN_ASPECTS
 from ccai.interop.xen.apigroups.basegroup import BaseGroup
-from ccai.interop.xen.exceptions.xenexceptions import XenError
+from ccai.interop.xen.exceptions.xenexceptions import is_handle_invalid, XenError
 from ccai.interop.xen.model.xentaskhandle import XenTaskHandle
 from ccai.interop.xen.model.xenvm import XenVm
 from ccai.interop.xen.refs.refresolver import RefResolver
@@ -381,9 +381,11 @@ class VmsGroup(BaseGroup):
         try:
             self._call(method_path="VM.destroy", args=[vm_ref],
                        aspects=aspects)
-        except XenError:
-            # Already-absent VMs make destroy a no-op.
-            pass
+        except XenError as xerr:
+            # Only an already-absent handle makes destroy a no-op; any other XAPI
+            # fault (in-use, not-allowed, permission) is a genuine failure.
+            if not is_handle_invalid(xerr):
+                raise
         self._resolver.forget_uuid(uuid=vm_uuid)
         return
 

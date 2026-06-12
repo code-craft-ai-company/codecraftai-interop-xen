@@ -15,7 +15,7 @@ from typing import List, Optional
 
 from ccai.interop.xen.aspectsxen import AspectsXapi, DEFAULT_XEN_ASPECTS
 from ccai.interop.xen.apigroups.basegroup import BaseGroup
-from ccai.interop.xen.exceptions.xenexceptions import XenError
+from ccai.interop.xen.exceptions.xenexceptions import is_handle_invalid, XenError
 from ccai.interop.xen.model.xenvdi import XenVdi
 from ccai.interop.xen.specs.xenvdispec import XenVdiSpec
 
@@ -119,9 +119,11 @@ class VdiGroup(BaseGroup):
         try:
             self._call(method_path="VDI.destroy", args=[vdi_ref],
                        aspects=aspects)
-        except XenError:
-            # Already-absent VDIs make destroy a no-op.
-            pass
+        except XenError as xerr:
+            # Only an already-absent handle makes delete a no-op; other XAPI faults
+            # are genuine failures and must surface.
+            if not is_handle_invalid(xerr):
+                raise
         self._resolver.forget_uuid(uuid=vdi_uuid)
         return
 
