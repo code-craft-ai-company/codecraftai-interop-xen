@@ -12,7 +12,8 @@ __copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
-from hypothesis import given, settings, strategies as st
+from ccai.testbase.properties import given
+from ccai.testbase.properties import strategies as st
 
 from ccai.interfaces.itaskhandle import TaskState
 
@@ -74,7 +75,6 @@ def _fresh_client():
 
 @given(repeat_count=st.integers(min_value=1, max_value=6),
        size=st.integers(min_value=1024, max_value=1099511627776))
-@settings(deadline=None)
 def test_property_vdi_create_is_idempotent_under_repetition(
         repeat_count, size) -> None:
     """
@@ -97,7 +97,6 @@ def test_property_vdi_create_is_idempotent_under_repetition(
 
 
 @given(invalid_call_index=st.integers(min_value=1, max_value=3))
-@settings(deadline=None)
 def test_property_relogin_preserves_enumeration_result(
         invalid_call_index) -> None:
     """
