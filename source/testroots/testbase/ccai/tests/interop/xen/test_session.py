@@ -12,7 +12,8 @@ __copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
-import pytest
+from ccai import testbase
+
 
 from ccai.errors.exceptions import ConfigurationError, SemanticError
 
@@ -31,7 +32,7 @@ def test_credential_rejects_missing_fields() -> None:
     """
         Missing pool-master URL or credentials raises ConfigurationError.
     """
-    with pytest.raises(ConfigurationError):
+    with testbase.raises(ConfigurationError):
         XenSessionCredential(master_url="", username="root",
                              password="secret")
     return
@@ -56,7 +57,7 @@ def test_login_failure_raises_authentication_error(credential,
     client = XenClient(credential=credential,
                        transport_factory=lambda *, master_url: transport,
                        aspects=fast_aspects)
-    with pytest.raises(XenAuthenticationError):
+    with testbase.raises(XenAuthenticationError):
         client.login(aspects=fast_aspects)
     return
 
@@ -130,7 +131,7 @@ def test_dispatch_lets_semantic_error_bubble(credential,
                        transport_factory=lambda *, master_url: transport,
                        aspects=fast_aspects)
     client.login(aspects=fast_aspects)
-    with pytest.raises(SemanticError):
+    with testbase.raises(SemanticError):
         client.session_manager.dispatch(method_path="VM.get_all_records",
                                         aspects=fast_aspects)
     return

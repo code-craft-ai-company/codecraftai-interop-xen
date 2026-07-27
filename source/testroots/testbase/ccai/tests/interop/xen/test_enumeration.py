@@ -12,7 +12,8 @@ __copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
-import pytest
+from ccai import testbase
+
 
 from ccai.errors.exceptions import SemanticError
 
@@ -42,7 +43,7 @@ def test_pool_get_raises_when_no_pool(client, transport, fast_aspects) -> None:
         Pool.get raises SemanticError when no pool is present.
     """
     transport.pools.clear()
-    with pytest.raises(SemanticError):
+    with testbase.raises(SemanticError):
         client.Pool.get(aspects=fast_aspects)
     return
 

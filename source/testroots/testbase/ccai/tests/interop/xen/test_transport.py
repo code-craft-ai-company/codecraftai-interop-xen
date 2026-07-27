@@ -12,7 +12,8 @@ __copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
-import pytest
+from ccai import testbase
+
 
 from ccai.errors.exceptions import ConfigurationError
 
@@ -45,7 +46,7 @@ def test_unwrap_failure_raises_xen_error() -> None:
     """
         A generic failure envelope raises XenError.
     """
-    with pytest.raises(XenError):
+    with testbase.raises(XenError):
         XenSessionManager._unwrap(
             response={"Status": "Failure",
                       "ErrorDescription": ["INTERNAL_ERROR", "boom"]})
@@ -57,7 +58,7 @@ def test_unwrap_auth_failure_raises_authentication_error() -> None:
         An authentication failure code reclassifies to
         XenAuthenticationError.
     """
-    with pytest.raises(XenAuthenticationError):
+    with testbase.raises(XenAuthenticationError):
         XenSessionManager._unwrap(
             response={"Status": "Failure",
                       "ErrorDescription": ["SESSION_AUTHENTICATION_FAILED"]})
@@ -81,7 +82,7 @@ def test_session_manager_requires_credential() -> None:
         Constructing a XenSessionManager without a credential raises
         ConfigurationError.
     """
-    with pytest.raises(ConfigurationError):
+    with testbase.raises(ConfigurationError):
         XenSessionManager(credential=None)
     return
 
@@ -92,7 +93,7 @@ def test_dispatch_unknown_method_raises_xen_error(client,
         An unknown XAPI method dispatched through the manager raises
         XenError after exhausting the attempt budget or immediately.
     """
-    with pytest.raises(XenError):
+    with testbase.raises(XenError):
         client.session_manager.dispatch(method_path="VM.no_such_method",
                                         args=[], aspects=fast_aspects)
     return

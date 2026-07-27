@@ -11,7 +11,8 @@ __copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
-import pytest
+from ccai import testbase
+
 
 from ccai.interfaces.itaskhandle import ITaskHandle, TaskState
 
@@ -91,7 +92,7 @@ def test_handle_wait_failure_raises() -> None:
 
     handle = XenTaskHandle(task_uuid="t", status_fetcher=fetch,
                            sleeper=lambda s: None)
-    with pytest.raises(XenTaskFailedError) as caught:
+    with testbase.raises(XenTaskFailedError) as caught:
         handle.wait(aspects=AspectsXapi(completion_interval=0.0))
     assert caught.value.error_info == ["INTERNAL_ERROR", "boom"]
     return
@@ -127,7 +128,7 @@ def test_handle_wait_times_out() -> None:
     handle = XenTaskHandle(task_uuid="t", status_fetcher=fetch,
                            sleeper=lambda s: None, clock=clock)
     aspects = AspectsXapi(completion_interval=0.0, completion_timeout=10.0)
-    with pytest.raises(TimeoutError):
+    with testbase.raises(TimeoutError):
         handle.wait(aspects=aspects)
     return
 
@@ -138,7 +139,7 @@ def test_handle_cancel_without_canceller_raises() -> None:
     """
     handle = XenTaskHandle(task_uuid="t",
                            status_fetcher=lambda u: XenTaskStatus(uuid=u))
-    with pytest.raises(NotImplementedError):
+    with testbase.raises(NotImplementedError):
         handle.cancel()
     return
 

@@ -12,7 +12,8 @@ __copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
-import pytest
+from ccai import testbase
+
 
 from ccai.testbase.properties import given
 from ccai.testbase.properties import strategies as st
@@ -38,7 +39,7 @@ def test_unknown_ref_raises_semantic_error() -> None:
         Resolving an unknown opaque ref raises SemanticError.
     """
     resolver = RefResolver()
-    with pytest.raises(SemanticError):
+    with testbase.raises(SemanticError):
         resolver.uuid_for(opaque_ref="OpaqueRef:missing")
     return
 
@@ -48,7 +49,7 @@ def test_unknown_uuid_raises_semantic_error() -> None:
         Resolving an unknown uuid raises SemanticError.
     """
     resolver = RefResolver()
-    with pytest.raises(SemanticError):
+    with testbase.raises(SemanticError):
         resolver.ref_for(uuid="uuid-missing")
     return
 
@@ -70,7 +71,7 @@ def test_forget_uuid_drops_both_directions() -> None:
     resolver.remember(opaque_ref="OpaqueRef:abc", uuid="uuid-abc")
     resolver.forget_uuid(uuid="uuid-abc")
     assert resolver.maybe_uuid_for(opaque_ref="OpaqueRef:abc") is None
-    with pytest.raises(SemanticError):
+    with testbase.raises(SemanticError):
         resolver.ref_for(uuid="uuid-abc")
     return
 

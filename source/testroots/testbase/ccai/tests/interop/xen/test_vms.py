@@ -12,7 +12,8 @@ __copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
-import pytest
+from ccai import testbase
+
 
 from ccai.interop.xen.model.xentaskhandle import XenTaskHandle
 from ccai.interop.xen.model.xenvm import XenVm
@@ -129,7 +130,7 @@ def test_vms_get_by_name_label(client, fast_aspects) -> None:
     return
 
 
-@pytest.mark.parametrize("operation,expected_state", [
+@testbase.parametrize("operation,expected_state", [
     ("start", "Running"),
     ("clean_shutdown", "Halted"),
     ("hard_shutdown", "Halted"),
