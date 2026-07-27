@@ -27,6 +27,8 @@ from ccai.interop.xen.xenclient import XenClient
 
 from ._mockxapi import MockXapiTransport
 
+from ccai.tests.interop.xen.factories import (create_xen_client, create_xen_transport)
+
 
 def test_credential_rejects_missing_fields() -> None:
     """
@@ -38,7 +40,9 @@ def test_credential_rejects_missing_fields() -> None:
     return
 
 
-def test_login_caches_session(client, transport, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_login_caches_session(transport, client, fast_aspects) -> None:
     """
         First use logs in once and caches the session reference.
     """
@@ -62,7 +66,9 @@ def test_login_failure_raises_authentication_error(credential,
     return
 
 
-def test_logout_releases_session(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_logout_releases_session(transport, client, fast_aspects) -> None:
     """
         Logout clears the cached session and is idempotent.
     """
@@ -73,7 +79,9 @@ def test_logout_releases_session(client, fast_aspects) -> None:
     return
 
 
-def test_transparent_relogin_on_session_invalid(client, transport,
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_transparent_relogin_on_session_invalid(transport, client,
                                                 fast_aspects) -> None:
     """
         A SESSION_INVALID fault triggers a transparent re-login and retry;

@@ -19,6 +19,9 @@ from ccai.interop.xen.specs.xenvdispec import XenVdiSpec
 from ccai.interop.xen.specs.xenvifspec import XenVifSpec
 from ccai.interop.xen.specs.xenvmclonespec import XenVmCloneSpec
 
+from ccai import testbase
+from ccai.tests.interop.xen.factories import (create_xen_client, create_xen_transport)
+
 
 def _vm_and_vdi(client, fast_aspects):
     """
@@ -36,7 +39,9 @@ def _vm_and_vdi(client, fast_aspects):
     return rtnval
 
 
-def test_vbd_attach_returns_typed_record(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_vbd_attach_returns_typed_record(transport, client, fast_aspects) -> None:
     """
         Vbds.attach links a VDI to a VM and returns a typed XenVbd.
     """
@@ -50,7 +55,9 @@ def test_vbd_attach_returns_typed_record(client, fast_aspects) -> None:
     return
 
 
-def test_vbd_attach_is_idempotent(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_vbd_attach_is_idempotent(transport, client, fast_aspects) -> None:
     """
         Attaching the same VM/VDI pair twice returns the existing VBD.
     """
@@ -63,7 +70,9 @@ def test_vbd_attach_is_idempotent(client, fast_aspects) -> None:
     return
 
 
-def test_vbd_detach_removes_record(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_vbd_detach_removes_record(transport, client, fast_aspects) -> None:
     """
         Vbds.detach destroys a VBD; detach is idempotent.
     """
@@ -78,7 +87,9 @@ def test_vbd_detach_removes_record(client, fast_aspects) -> None:
     return
 
 
-def test_vif_attach_returns_typed_record(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_vif_attach_returns_typed_record(transport, client, fast_aspects) -> None:
     """
         Vifs.attach links a VM to a network and returns a typed XenVif.
     """
@@ -93,7 +104,9 @@ def test_vif_attach_returns_typed_record(client, fast_aspects) -> None:
     return
 
 
-def test_vif_attach_is_idempotent(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_vif_attach_is_idempotent(transport, client, fast_aspects) -> None:
     """
         Attaching the same VM/network/device triple twice returns the
         existing VIF.
@@ -109,7 +122,9 @@ def test_vif_attach_is_idempotent(client, fast_aspects) -> None:
     return
 
 
-def test_vif_detach_removes_record(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_vif_detach_removes_record(transport, client, fast_aspects) -> None:
     """
         Vifs.detach destroys a VIF; detach is idempotent.
     """

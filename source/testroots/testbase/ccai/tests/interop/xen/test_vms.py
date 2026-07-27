@@ -19,6 +19,8 @@ from ccai.interop.xen.model.xentaskhandle import XenTaskHandle
 from ccai.interop.xen.model.xenvm import XenVm
 from ccai.interop.xen.specs.xenvmclonespec import XenVmCloneSpec
 
+from ccai.tests.interop.xen.factories import (create_xen_client, create_xen_transport)
+
 
 def _clone(client, fast_aspects, *, name_label="worker-01",
            vcpus_max=None, memory_bytes=None, other_config=None,
@@ -39,7 +41,9 @@ def _clone(client, fast_aspects, *, name_label="worker-01",
     return rtnval
 
 
-def test_clone_from_template_returns_vm_and_handle(client,
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_clone_from_template_returns_vm_and_handle(transport, client,
                                                    fast_aspects) -> None:
     """
         Cloning yields a typed XenVm and a provision XenTaskHandle.
@@ -52,7 +56,9 @@ def test_clone_from_template_returns_vm_and_handle(client,
     return
 
 
-def test_clone_applies_overrides(client, transport, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_clone_applies_overrides(transport, client, fast_aspects) -> None:
     """
         Clone applies vcpu / memory / other_config / tags / xenstore data.
     """
@@ -69,7 +75,9 @@ def test_clone_applies_overrides(client, transport, fast_aspects) -> None:
     return
 
 
-def test_clone_is_idempotent_by_name_label(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_clone_is_idempotent_by_name_label(transport, client, fast_aspects) -> None:
     """
         Re-cloning with an existing name_label returns the existing VM and
         a None task handle.
@@ -81,7 +89,9 @@ def test_clone_is_idempotent_by_name_label(client, fast_aspects) -> None:
     return
 
 
-def test_provision_task_handle_completes(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_provision_task_handle_completes(transport, client, fast_aspects) -> None:
     """
         The provision task handle waits to a SUCCEEDED terminal state.
     """
@@ -91,7 +101,9 @@ def test_provision_task_handle_completes(client, fast_aspects) -> None:
     return
 
 
-def test_vms_list_excludes_templates(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_vms_list_excludes_templates(transport, client, fast_aspects) -> None:
     """
         Vms.list returns cloned VMs but not templates.
     """
@@ -102,7 +114,9 @@ def test_vms_list_excludes_templates(client, fast_aspects) -> None:
     return
 
 
-def test_vms_get_by_uuid(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_vms_get_by_uuid(transport, client, fast_aspects) -> None:
     """
         Vms.get returns a XenVm for a known uuid and None for an unknown.
     """
@@ -116,7 +130,9 @@ def test_vms_get_by_uuid(client, fast_aspects) -> None:
     return
 
 
-def test_vms_get_by_name_label(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_vms_get_by_name_label(transport, client, fast_aspects) -> None:
     """
         Vms.get_by_name_label finds a cloned VM and misses absent ones.
     """
@@ -130,6 +146,8 @@ def test_vms_get_by_name_label(client, fast_aspects) -> None:
     return
 
 
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
 @testbase.parametrize("operation,expected_state", [
     ("start", "Running"),
     ("clean_shutdown", "Halted"),
@@ -138,7 +156,7 @@ def test_vms_get_by_name_label(client, fast_aspects) -> None:
     ("suspend", "Suspended"),
     ("resume", "Running"),
 ])
-def test_vm_power_operations(client, transport, fast_aspects, operation,
+def test_vm_power_operations(transport, client, fast_aspects, operation,
                              expected_state) -> None:
     """
         Each VM power op dispatches an Async task and moves power state.
@@ -151,7 +169,9 @@ def test_vm_power_operations(client, transport, fast_aspects, operation,
     return
 
 
-def test_vm_wait_for_power_state(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_vm_wait_for_power_state(transport, client, fast_aspects) -> None:
     """
         wait_for_power_state returns once the VM reaches the desired state.
     """
@@ -163,7 +183,9 @@ def test_vm_wait_for_power_state(client, fast_aspects) -> None:
     return
 
 
-def test_vm_destroy_removes_record(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_vm_destroy_removes_record(transport, client, fast_aspects) -> None:
     """
         Vms.destroy removes the VM by uuid.
     """
@@ -173,7 +195,9 @@ def test_vm_destroy_removes_record(client, fast_aspects) -> None:
     return
 
 
-def test_vm_destroy_is_idempotent(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_vm_destroy_is_idempotent(transport, client, fast_aspects) -> None:
     """
         Destroying a VM twice (and an unknown VM) succeeds as a no-op.
     """

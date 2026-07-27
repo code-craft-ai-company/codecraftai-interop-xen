@@ -26,8 +26,12 @@ from ccai.interop.xen.model.xenstoragerepository import (
 )
 from ccai.interop.xen.model.xenvmtemplate import XenVmTemplate
 
+from ccai.tests.interop.xen.factories import (create_xen_client, create_xen_transport)
 
-def test_pool_get_returns_typed_record(client, fast_aspects) -> None:
+
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_pool_get_returns_typed_record(transport, client, fast_aspects) -> None:
     """
         Pool.get returns a single typed XenPool record.
     """
@@ -38,7 +42,9 @@ def test_pool_get_returns_typed_record(client, fast_aspects) -> None:
     return
 
 
-def test_pool_get_raises_when_no_pool(client, transport, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_pool_get_raises_when_no_pool(transport, client, fast_aspects) -> None:
     """
         Pool.get raises SemanticError when no pool is present.
     """
@@ -48,7 +54,9 @@ def test_pool_get_raises_when_no_pool(client, transport, fast_aspects) -> None:
     return
 
 
-def test_hosts_list_returns_typed_records(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_hosts_list_returns_typed_records(transport, client, fast_aspects) -> None:
     """
         Hosts.list returns typed XenHost records keyed by uuid.
     """
@@ -62,7 +70,9 @@ def test_hosts_list_returns_typed_records(client, fast_aspects) -> None:
     return
 
 
-def test_networks_list_returns_typed_records(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_networks_list_returns_typed_records(transport, client, fast_aspects) -> None:
     """
         Networks.list returns typed XenNetwork records.
     """
@@ -75,7 +85,9 @@ def test_networks_list_returns_typed_records(client, fast_aspects) -> None:
     return
 
 
-def test_networks_get_by_name_label_matches(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_networks_get_by_name_label_matches(transport, client, fast_aspects) -> None:
     """
         Networks.get_by_name_label filters by exact name_label.
     """
@@ -91,7 +103,9 @@ def test_networks_get_by_name_label_matches(client, fast_aspects) -> None:
     return
 
 
-def test_networks_list_pifs_filters_by_host(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_networks_list_pifs_filters_by_host(transport, client, fast_aspects) -> None:
     """
         Networks.list_pifs resolves host/network refs and filters by host.
     """
@@ -112,7 +126,9 @@ def test_networks_list_pifs_filters_by_host(client, fast_aspects) -> None:
     return
 
 
-def test_networks_list_pifs_excludes_other_hosts(client,
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_networks_list_pifs_excludes_other_hosts(transport, client,
                                                   fast_aspects) -> None:
     """
         Networks.list_pifs returns nothing for an unrelated host uuid.
@@ -124,7 +140,9 @@ def test_networks_list_pifs_excludes_other_hosts(client,
     return
 
 
-def test_sr_list_returns_typed_records(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_sr_list_returns_typed_records(transport, client, fast_aspects) -> None:
     """
         Sr.list returns typed XenStorageRepository records.
     """
@@ -138,7 +156,9 @@ def test_sr_list_returns_typed_records(client, fast_aspects) -> None:
     return
 
 
-def test_templates_list_returns_only_templates(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_templates_list_returns_only_templates(transport, client, fast_aspects) -> None:
     """
         Templates.list returns only VM records flagged is_a_template.
     """

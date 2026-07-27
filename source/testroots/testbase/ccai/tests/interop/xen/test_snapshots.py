@@ -15,6 +15,9 @@ __credits__ = []
 from ccai.interop.xen.model.xenvmsnapshot import XenVmSnapshot
 from ccai.interop.xen.specs.xenvmclonespec import XenVmCloneSpec
 
+from ccai import testbase
+from ccai.tests.interop.xen.factories import (create_xen_client, create_xen_transport)
+
 
 def _vm(client, fast_aspects):
     """
@@ -28,7 +31,9 @@ def _vm(client, fast_aspects):
     return rtnval
 
 
-def test_snapshot_vm_returns_typed_record(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_snapshot_vm_returns_typed_record(transport, client, fast_aspects) -> None:
     """
         Snapshots.snapshot_vm takes a snapshot and returns a typed record.
     """
@@ -41,7 +46,9 @@ def test_snapshot_vm_returns_typed_record(client, fast_aspects) -> None:
     return
 
 
-def test_snapshots_list_for_vm(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_snapshots_list_for_vm(transport, client, fast_aspects) -> None:
     """
         Snapshots.list returns snapshots taken of a specific VM.
     """
@@ -57,7 +64,9 @@ def test_snapshots_list_for_vm(client, fast_aspects) -> None:
     return
 
 
-def test_snapshots_list_excludes_other_vms(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_snapshots_list_excludes_other_vms(transport, client, fast_aspects) -> None:
     """
         Snapshots.list returns nothing for a VM with no snapshots.
     """
@@ -68,7 +77,9 @@ def test_snapshots_list_excludes_other_vms(client, fast_aspects) -> None:
     return
 
 
-def test_snapshot_revert(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_snapshot_revert(transport, client, fast_aspects) -> None:
     """
         Snapshots.revert dispatches VM.revert without raising.
     """
@@ -79,7 +90,9 @@ def test_snapshot_revert(client, fast_aspects) -> None:
     return
 
 
-def test_snapshot_destroy_is_idempotent(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_snapshot_destroy_is_idempotent(transport, client, fast_aspects) -> None:
     """
         Snapshots.destroy removes a snapshot; destroy is idempotent.
     """

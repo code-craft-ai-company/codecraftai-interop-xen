@@ -26,8 +26,13 @@ from ccai.interop.xen.apigroups.vmsgroup import VmsGroup
 from ccai.interop.xen.refs.refresolver import RefResolver
 from ccai.interop.xen.session.xensessionmanager import XenSessionManager
 
+from ccai import testbase
+from ccai.tests.interop.xen.factories import (create_xen_client, create_xen_transport)
 
-def test_client_exposes_session_manager_and_resolver(client) -> None:
+
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_client_exposes_session_manager_and_resolver(transport, client) -> None:
     """
         The client exposes its owning session manager and shared resolver.
     """
@@ -36,7 +41,9 @@ def test_client_exposes_session_manager_and_resolver(client) -> None:
     return
 
 
-def test_client_group_properties_have_expected_types(client) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_client_group_properties_have_expected_types(transport, client) -> None:
     """
         Every api-group property returns the correct group type.
     """
@@ -54,7 +61,9 @@ def test_client_group_properties_have_expected_types(client) -> None:
     return
 
 
-def test_client_groups_are_lazily_constructed_and_cached(client) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_client_groups_are_lazily_constructed_and_cached(transport, client) -> None:
     """
         Each api-group property is constructed once and cached thereafter.
     """
@@ -68,7 +77,9 @@ def test_client_groups_are_lazily_constructed_and_cached(client) -> None:
     return
 
 
-def test_client_groups_share_one_resolver(client) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_client_groups_share_one_resolver(transport, client) -> None:
     """
         Every api-group shares the client's single RefResolver instance.
     """
@@ -79,7 +90,9 @@ def test_client_groups_share_one_resolver(client) -> None:
     return
 
 
-def test_client_groups_share_one_session_manager(client) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_client_groups_share_one_session_manager(transport, client) -> None:
     """
         Every api-group shares the client's single XenSessionManager.
     """

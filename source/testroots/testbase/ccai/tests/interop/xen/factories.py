@@ -1,5 +1,5 @@
 """
-    .. module:: conftest
+    .. module:: factories
     :platform: Darwin, Linux, Unix, Windows
     :synopsis: Shared fixtures for the Xen interop client tests.
 
@@ -11,7 +11,9 @@ __copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
-import pytest
+from collections.abc import Generator
+
+from ccai import testbase
 
 from ccai.interop.xen.aspectsxen import AspectsXapi
 from ccai.interop.xen.session.xensessioncredential import (
@@ -19,11 +21,10 @@ from ccai.interop.xen.session.xensessioncredential import (
 )
 from ccai.interop.xen.xenclient import XenClient
 
-from ._mockxapi import MockXapiTransport
+from ccai.tests.interop.xen._mockxapi import MockXapiTransport
 
-
-@pytest.fixture
-def credential() -> XenSessionCredential:
+@testbase.register.resource_factory()
+def create_xen_credential(constraints=None) -> Generator[XenSessionCredential, None, None]:
     """
         Return a deterministic XenSessionCredential.
     """
@@ -31,30 +32,30 @@ def credential() -> XenSessionCredential:
         master_url="https://xen-master.lab", username="root",
         password="secret-value",
     )
-    return rtnval
+    yield rtnval
 
 
-@pytest.fixture
-def fast_aspects() -> AspectsXapi:
+@testbase.register.resource_factory()
+def create_xen_fast_aspects(constraints=None) -> Generator[AspectsXapi, None, None]:
     """
         Return AspectsXapi with a tight poll loop for tests.
     """
     rtnval = AspectsXapi(completion_interval=0.001, completion_timeout=5.0,
                          max_attempts=3)
-    return rtnval
+    yield rtnval
 
 
-@pytest.fixture
-def transport() -> MockXapiTransport:
+@testbase.register.resource_factory()
+def create_xen_transport(constraints=None) -> Generator[MockXapiTransport, None, None]:
     """
         Return a fresh MockXapiTransport.
     """
     rtnval = MockXapiTransport()
-    return rtnval
+    yield rtnval
 
 
-@pytest.fixture
-def client(credential, transport, fast_aspects) -> XenClient:
+@testbase.register.resource_factory()
+def create_xen_client(credential, transport, fast_aspects, constraints=None) -> Generator[XenClient, None, None]:
     """
         Return a XenClient wired to the mock transport.
     """
@@ -63,4 +64,4 @@ def client(credential, transport, fast_aspects) -> XenClient:
         transport_factory=lambda *, master_url: transport,
         aspects=fast_aspects,
     )
-    return rtnval
+    yield rtnval

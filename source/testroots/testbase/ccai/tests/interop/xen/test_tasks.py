@@ -23,9 +23,13 @@ from ccai.interop.xen.model.xentaskstatus import (
     CANCELLED, FAILURE, PENDING, SUCCESS, XenTaskStatus
 )
 
+from ccai.tests.interop.xen.factories import (create_xen_client, create_xen_transport)
 
-def test_tasks_get_status_returns_typed_snapshot(client,
-                                                 transport,
+
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_tasks_get_status_returns_typed_snapshot(transport,
+                                                 client,
                                                  fast_aspects) -> None:
     """
         Tasks.get_status returns a typed XenTaskStatus for a task uuid.

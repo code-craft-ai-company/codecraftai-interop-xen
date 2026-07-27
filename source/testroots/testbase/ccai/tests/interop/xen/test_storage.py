@@ -14,6 +14,9 @@ __credits__ = []
 from ccai.interop.xen.model.xenvdi import XenVdi
 from ccai.interop.xen.specs.xenvdispec import XenVdiSpec
 
+from ccai import testbase
+from ccai.tests.interop.xen.factories import (create_xen_client, create_xen_transport)
+
 
 def _seed_sr_ref(client, fast_aspects) -> None:
     """
@@ -23,7 +26,9 @@ def _seed_sr_ref(client, fast_aspects) -> None:
     return
 
 
-def test_vdi_create_returns_typed_record(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_vdi_create_returns_typed_record(transport, client, fast_aspects) -> None:
     """
         Vdi.create creates a VDI and returns a typed XenVdi record.
     """
@@ -38,7 +43,9 @@ def test_vdi_create_returns_typed_record(client, fast_aspects) -> None:
     return
 
 
-def test_vdi_create_is_idempotent_by_name_label(client,
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_vdi_create_is_idempotent_by_name_label(transport, client,
                                                 fast_aspects) -> None:
     """
         Creating a VDI with an existing name_label returns the existing one.
@@ -53,7 +60,9 @@ def test_vdi_create_is_idempotent_by_name_label(client,
     return
 
 
-def test_vdi_list_filters_by_sr(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_vdi_list_filters_by_sr(transport, client, fast_aspects) -> None:
     """
         Vdi.list filters records by sr_uuid when one is supplied.
     """
@@ -70,7 +79,9 @@ def test_vdi_list_filters_by_sr(client, fast_aspects) -> None:
     return
 
 
-def test_vdi_delete_removes_record(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_vdi_delete_removes_record(transport, client, fast_aspects) -> None:
     """
         Vdi.delete destroys a VDI by uuid.
     """
@@ -83,7 +94,9 @@ def test_vdi_delete_removes_record(client, fast_aspects) -> None:
     return
 
 
-def test_vdi_delete_unknown_is_noop(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_vdi_delete_unknown_is_noop(transport, client, fast_aspects) -> None:
     """
         Deleting an unknown VDI succeeds as a no-op.
     """
@@ -91,7 +104,9 @@ def test_vdi_delete_unknown_is_noop(client, fast_aspects) -> None:
     return
 
 
-def test_vdi_delete_is_idempotent(client, fast_aspects) -> None:
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_vdi_delete_is_idempotent(transport, client, fast_aspects) -> None:
     """
         Deleting the same VDI twice succeeds, the second time as a no-op.
     """
@@ -104,7 +119,9 @@ def test_vdi_delete_is_idempotent(client, fast_aspects) -> None:
     return
 
 
-def test_vdi_resize_updates_virtual_size(client, transport,
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_vdi_resize_updates_virtual_size(transport, client,
                                          fast_aspects) -> None:
     """
         Vdi.resize updates the VDI virtual_size on the host.

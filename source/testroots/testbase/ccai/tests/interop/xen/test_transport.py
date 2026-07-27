@@ -22,6 +22,8 @@ from ccai.interop.xen.exceptions.xenexceptions import (
 )
 from ccai.interop.xen.session.xensessionmanager import XenSessionManager
 
+from ccai.tests.interop.xen.factories import (create_xen_client, create_xen_transport)
+
 
 def test_unwrap_returns_bare_value() -> None:
     """
@@ -87,7 +89,9 @@ def test_session_manager_requires_credential() -> None:
     return
 
 
-def test_dispatch_unknown_method_raises_xen_error(client,
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_dispatch_unknown_method_raises_xen_error(transport, client,
                                                   fast_aspects) -> None:
     """
         An unknown XAPI method dispatched through the manager raises
@@ -99,7 +103,9 @@ def test_dispatch_unknown_method_raises_xen_error(client,
     return
 
 
-def test_dispatch_logs_in_before_first_call(client, transport,
+@testbase.attach.parameter(create_xen_client, identifier="client")
+@testbase.attach.parameter(create_xen_transport, identifier="transport")
+def test_dispatch_logs_in_before_first_call(transport, client,
                                             fast_aspects) -> None:
     """
         The first dispatched call logs in transparently before dispatching.

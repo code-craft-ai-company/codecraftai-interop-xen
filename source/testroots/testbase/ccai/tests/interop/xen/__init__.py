@@ -1,0 +1,20 @@
+"""
+    Originates the xen test resources into this scope.
+
+    Replaces conftest.py, which testbase does not read.
+
+    Only the resources that accumulate no state are originated here.
+    The stateful doubles are attached to the test cases themselves, so
+    each test gets a fresh instance; a scope origination is one
+    instance for the whole package.
+"""
+
+from ccai import testbase
+
+from ccai.tests.interop.xen.factories import (
+    create_xen_credential,
+    create_xen_fast_aspects,
+)
+
+testbase.originate.parameter(create_xen_credential, identifier="credential")
+testbase.originate.parameter(create_xen_fast_aspects, identifier="fast_aspects")
