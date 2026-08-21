@@ -22,7 +22,7 @@ from ccai.interop.xen.exceptions.xenexceptions import (
 )
 from ccai.interop.xen.session.xensessionmanager import XenSessionManager
 
-from ccai.tests.interop.xen.factories import (create_xen_client, create_xen_transport)
+from .factories import (create_xen_client, create_xen_transport)
 
 
 def test_unwrap_returns_bare_value() -> None:

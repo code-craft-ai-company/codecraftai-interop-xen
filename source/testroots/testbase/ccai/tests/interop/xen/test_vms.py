@@ -19,7 +19,7 @@ from ccai.interop.xen.model.xentaskhandle import XenTaskHandle
 from ccai.interop.xen.model.xenvm import XenVm
 from ccai.interop.xen.specs.xenvmclonespec import XenVmCloneSpec
 
-from ccai.tests.interop.xen.factories import (create_xen_client, create_xen_transport)
+from .factories import (create_xen_client, create_xen_transport)
 
 
 def _clone(client, fast_aspects, *, name_label="worker-01",

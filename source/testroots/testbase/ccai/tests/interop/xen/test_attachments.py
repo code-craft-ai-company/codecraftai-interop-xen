@@ -20,7 +20,7 @@ from ccai.interop.xen.specs.xenvifspec import XenVifSpec
 from ccai.interop.xen.specs.xenvmclonespec import XenVmCloneSpec
 
 from ccai import testbase
-from ccai.tests.interop.xen.factories import (create_xen_client, create_xen_transport)
+from .factories import (create_xen_client, create_xen_transport)
 
 
 def _vm_and_vdi(client, fast_aspects):

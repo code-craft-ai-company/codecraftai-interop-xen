@@ -16,7 +16,7 @@ from ccai.interop.xen.model.xenvmsnapshot import XenVmSnapshot
 from ccai.interop.xen.specs.xenvmclonespec import XenVmCloneSpec
 
 from ccai import testbase
-from ccai.tests.interop.xen.factories import (create_xen_client, create_xen_transport)
+from .factories import (create_xen_client, create_xen_transport)
 
 
 def _vm(client, fast_aspects):

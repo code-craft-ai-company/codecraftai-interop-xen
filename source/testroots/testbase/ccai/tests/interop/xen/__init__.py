@@ -11,7 +11,7 @@
 
 from ccai import testbase
 
-from ccai.tests.interop.xen.factories import (
+from .factories import (
     create_xen_credential,
     create_xen_fast_aspects,
 )

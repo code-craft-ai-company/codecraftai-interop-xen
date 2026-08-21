@@ -27,7 +27,7 @@ from ccai.interop.xen.xenclient import XenClient
 
 from ._mockxapi import MockXapiTransport
 
-from ccai.tests.interop.xen.factories import (create_xen_client, create_xen_transport)
+from .factories import (create_xen_client, create_xen_transport)
 
 
 def test_credential_rejects_missing_fields() -> None:

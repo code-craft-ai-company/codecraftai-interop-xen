@@ -21,7 +21,7 @@ from ccai.interop.xen.session.xensessioncredential import (
 )
 from ccai.interop.xen.xenclient import XenClient
 
-from ccai.tests.interop.xen._mockxapi import MockXapiTransport
+from ._mockxapi import MockXapiTransport
 
 @testbase.register.resource_factory()
 def create_xen_credential(constraints=None) -> Generator[XenSessionCredential, None, None]:

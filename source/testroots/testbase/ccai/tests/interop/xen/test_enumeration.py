@@ -26,7 +26,7 @@ from ccai.interop.xen.model.xenstoragerepository import (
 )
 from ccai.interop.xen.model.xenvmtemplate import XenVmTemplate
 
-from ccai.tests.interop.xen.factories import (create_xen_client, create_xen_transport)
+from .factories import (create_xen_client, create_xen_transport)
 
 
 @testbase.attach.parameter(create_xen_client, identifier="client")

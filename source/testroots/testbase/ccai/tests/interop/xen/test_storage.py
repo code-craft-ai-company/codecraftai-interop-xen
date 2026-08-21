@@ -15,7 +15,7 @@ from ccai.interop.xen.model.xenvdi import XenVdi
 from ccai.interop.xen.specs.xenvdispec import XenVdiSpec
 
 from ccai import testbase
-from ccai.tests.interop.xen.factories import (create_xen_client, create_xen_transport)
+from .factories import (create_xen_client, create_xen_transport)
 
 
 def _seed_sr_ref(client, fast_aspects) -> None:

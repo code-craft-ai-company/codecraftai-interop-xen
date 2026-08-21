@@ -23,7 +23,7 @@ from ccai.interop.xen.model.xentaskstatus import (
     CANCELLED, FAILURE, PENDING, SUCCESS, XenTaskStatus
 )
 
-from ccai.tests.interop.xen.factories import (create_xen_client, create_xen_transport)
+from .factories import (create_xen_client, create_xen_transport)
 
 
 @testbase.attach.parameter(create_xen_client, identifier="client")
