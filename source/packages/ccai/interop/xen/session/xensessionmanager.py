@@ -193,6 +193,10 @@ class XenSessionManager:
         try:
             response = transport.session.login_with_password(
                 self._credential.username, self._credential.password)
+        # A SemanticError means an API has detected it is being used incorrectly.
+        # That is a code defect of compile-time severity: halt and report so it can
+        # be fixed.  It is caught here ONLY to re-raise it past the broad handler
+        # below -- never swallow it, never downgrade it to an Exception subclass.
         except SemanticError:
             raise
         except Exception as xcpt:
@@ -223,6 +227,10 @@ class XenSessionManager:
         transport = self._ensure_transport()
         try:
             transport.session.logout(self._session_ref)
+        # A SemanticError means an API has detected it is being used incorrectly.
+        # That is a code defect of compile-time severity: halt and report so it can
+        # be fixed.  It is caught here ONLY to re-raise it past the broad handler
+        # below -- never swallow it, never downgrade it to an Exception subclass.
         except SemanticError:
             raise
         except Exception:
@@ -276,6 +284,10 @@ class XenSessionManager:
                 return rtnval
             except XenAuthenticationError:
                 raise
+            # A SemanticError means an API has detected it is being used incorrectly.
+            # That is a code defect of compile-time severity: halt and report so it can
+            # be fixed.  It is caught here ONLY to re-raise it past the broad handler
+            # below -- never swallow it, never downgrade it to an Exception subclass.
             except SemanticError:
                 raise
             except Exception as xcpt:
