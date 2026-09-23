@@ -356,7 +356,6 @@ class MockXapiTransport:
         """ Create a VDI from a record dict. """
         record = args[0]
         uuid = self._alloc(prefix="vdi")
-        sr_uuid = self._uuid_of(opaque_ref=record["SR"])
         self.vdis[uuid] = {
             "uuid": uuid, "name_label": record["name_label"],
             "name_description": record.get("name_description", ""),

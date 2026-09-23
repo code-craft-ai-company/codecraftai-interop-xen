@@ -20,21 +20,14 @@ import time
 from typing import Callable, Optional
 
 from ccai.interfaces.itaskhandle import (
-    ITaskHandle, TaskResult, TaskState
+    TaskResult, TaskState
 )
 
 from ccai.interop.xen.aspectsxen import AspectsXapi, DEFAULT_XEN_ASPECTS
 from ccai.interop.xen.exceptions.xenexceptions import XenTaskFailedError
 from ccai.interop.xen.model.xentaskstatus import (
-    CANCELLED, FAILURE, SUCCESS, XenTaskStatus
+    CANCELLED, SUCCESS, XenTaskStatus
 )
-
-
-_IFACE_STATE_MAP = {
-    SUCCESS: TaskState.SUCCEEDED,
-    FAILURE: TaskState.FAILED,
-    CANCELLED: TaskState.CANCELLED,
-}
 
 
 class XenTaskHandle:
@@ -207,8 +200,3 @@ class XenTaskHandle:
 
         self._canceller(self._task_uuid)
         return
-
-
-# Runtime conformance attestation.  ``ITaskHandle`` is a runtime-checkable
-# Protocol; this binding makes the structural relationship explicit.
-_ITASKHANDLE_PROTOCOL = ITaskHandle
