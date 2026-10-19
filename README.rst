@@ -1,6 +1,6 @@
-=========================================
+==========================================
 Code Craft AI Interop - XCP-ng / XenServer
-=========================================
+==========================================
 
 The ``codecraftai-interop-xen`` package is the venue-specific client for XCP-ng and Citrix
 Hypervisor (XenServer) via the XAPI XML-RPC API exposed on the pool master. Although XAPI
