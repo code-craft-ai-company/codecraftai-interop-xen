@@ -1,6 +1,6 @@
 [project]
 name = "codecraftai-interop-xen"
-version = "1.2.0"
+version = "1.2.1"
 description = "Code Craft AI - XCP-ng/XenServer interop client"
 readme = "README.rst"
 license = "LicenseRef-CodeCraftAI-Source-Available"
